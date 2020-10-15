@@ -7,7 +7,7 @@
 </head>
 <body>
 
-
+  
   <div class="keys">
     <div data-key="65" class="key">
       <kbd>A</kbd>
@@ -58,23 +58,40 @@
   <audio data-key="76" src="sounds/tink.wav"></audio>
   
 <script>
- (function(){
-  //  let butt = new audio()
-  //  butt.src = url('./sounds/tink.wav')
-  //  $('#but').onclick()
+//  window載入addEventlistener事件 keydown紀錄哪個按鍵
+ window.addEventListener('keydown', function(e){
+  //  抓出按鍵的位置
+  //  data-attribute 可以抓到dom的內容
+  //  定義音樂
+  const audio = document.querySelector(`audio[data-key="${e.keyCode}"]`)
+  //  定義div
+  const div   = document.querySelector(`div[data-key="${e.keyCode}"]`)
+  console.log(div);
+  console.log(audio);
+  // 如果沒有按到對應按鍵 停止函式
+  if(!audio)  return
+  // currenttime = 0每次按時將時間歸零 
+  audio.currentTime = 0
+  // 撥放音樂
+  audio.play()
+  // 改變class
+  div.classList.add('playing')
 
-  window.addEventListener('keydown',playHandler)
-  function playHandler(e){
-    console.log(e);
-    // play music
-    const audio = document.querySelector(`audio[data-key='${e.keycode}' ]`)
-    console.log(audio);
-    // dom style
-    const style = document.querySelector(`div[data-key='${e.keycode}' ]`)
-    // style.classList.add('playing')
-  }
+ });
+  
+//按完後移除 playing class 
+ function removeTransition(e){
+  console.log(e);
+  // 
+  if(e.propertyName !== 'transform') return
+    this.classList.remove('playing')
+  
+  
+ }
 
- })()
+ const keys = document.querySelectorAll('.key')
+ keys.forEach(key => key.addEventListener('transitionend',removeTransition))
+  
 </script>
 
 
