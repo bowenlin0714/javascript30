@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>HTML5 Canvas</title>
+  <style>
+    html, body {
+      margin: 0;
+    }
+  </style>
+</head>
+<body>
+<canvas id="draw" width="800" height="800"></canvas>
+<script>
+const canvas = document.querySelector('#draw')
+// getcontext 渲染環境
+const ctx    = canvas.getContext('2d')
+// innerwidth
+canvas.width = window.innerWidth
+// innerheight
+canvas.height= window.innerHeight
+
+// ctx.strokeStyle  = 筆觸，軌跡顏色
+ctx.srokeStyle = '#BADA55'
+// ctx.lineJoin     = 兩條線接口交匯點 round = 圓角  miter = 尖角 bevel  = 平角
+ctx.lineJoin   = 'round'
+// ctx.lineCap      = 繪製線條的結束樣式 round = 圓角 square = 尾端加上方塊 butt = 與線齊平
+ctx.lineCap    = 'round'
+
+let isDrawing = false
+let lastx     = 0
+let lasty     = 0
+
+function draw(e){
+  console.log(e);
+}
+
+canvas.addEventListener('mousemove',draw)
+
+</script>
+
+</body>
+</html>
