@@ -7,35 +7,58 @@
     html, body {
       margin: 0;
     }
+    #draw{
+      border: 1px solid black;
+    }
   </style>
 </head>
 <body>
 <canvas id="draw" width="800" height="800"></canvas>
 <script>
-const canvas = document.querySelector('#draw')
-// getcontext 渲染環境
-const ctx    = canvas.getContext('2d')
-// innerwidth
-canvas.width = window.innerWidth
-// innerheight
-canvas.height= window.innerHeight
+  
+  let canvas = document.querySelector('#draw')
+  let ctx = canvas.getContext('2d')
+  // strokestyle = 線條樣式
+  // lineWidth   = 線條寬度
+  // lineCap     = 線條尾端樣式
+  // lineJoin    = 線條交會點樣式
+  ctx.strokeStyle = "hsl(0,100%,50%)"
+  ctx.lineWidth   = 100;
+  ctx.lineCap     = "round"
+  ctx.LineJoin    = "round"
 
-// ctx.strokeStyle  = 筆觸，軌跡顏色
-ctx.srokeStyle = '#BADA55'
-// ctx.lineJoin     = 兩條線接口交匯點 round = 圓角  miter = 尖角 bevel  = 平角
-ctx.lineJoin   = 'round'
-// ctx.lineCap      = 繪製線條的結束樣式 round = 圓角 square = 尾端加上方塊 butt = 與線齊平
-ctx.lineCap    = 'round'
+  let drawing  = false
 
-let isDrawing = false
-let lastx     = 0
-let lasty     = 0
+  let x = 0,
+   y = 0
+ 
+  //  mousedown 滑鼠的按鈕被按下
+  //  mousemove 滑鼠在目標上方移動
+  //  mouseup   滑鼠的鍵紐釋放彈起
+  //  mouseleave滑鼠離開元素時
+  canvas.addEventListener("mousedown",e =>{
+    drawing = true;
+    [x,y] = [e.offsetX, e.offsetY]
+  })
+  canvas.addEventListener("mousemove",e =>{
+    if(!drawing) return
+    
+    ctx.beginPath();
+    ctx.moveTo(x,y)
+    ctx.lineTo(e.offsetX, e.offsetY)
+    [x,y] = [e.offsetX, e.offsetY]
+    ctx.stroke()
 
-function draw(e){
-  console.log(e);
-}
+  })
+  canvas.addEventListener("mouseup",()=>{
+    drawing = true
+  })
+  canvas.addEventListener("mouseleave",()=>{
+    drawing = false
+  })
 
-canvas.addEventListener('mousemove',draw)
+  
+  
 
 </script>
 
